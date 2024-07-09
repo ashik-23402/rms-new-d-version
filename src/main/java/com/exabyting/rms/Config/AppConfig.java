@@ -1,4 +1,5 @@
 package com.exabyting.rms.Config;
+import com.exabyting.rms.Services.Implementation.Auth2SuccessHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ import java.util.List;
 public class AppConfig {
 
 
+    @Autowired
+    private Auth2SuccessHandler auth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,27 +41,35 @@ public class AppConfig {
                 .authorizeHttpRequests(authreq->
                         authreq.requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("api/v1/users/signup").permitAll()
+                                .requestMatchers("/sucess").permitAll()
+                                .requestMatchers("/me").permitAll()
                                 .anyRequest()
                                 .authenticated())
 
                 .addFilterBefore(new JwtTokenValidator(), UsernamePasswordAuthenticationFilter.class)
-                .cors((cor)->cor.configurationSource(
-                        new CorsConfigurationSource() {
-                            @Override
-                            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                                CorsConfiguration corsConfiguration = new CorsConfiguration();
-                                corsConfiguration.setAllowedOrigins(
-                                        List.of("http://localhost:5173/","http://localhost:3000/")
-                                );
-                                corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
-                                corsConfiguration.setAllowCredentials(true);
-                                corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
-                                corsConfiguration.setExposedHeaders(List.of("Authorization"));
-                                corsConfiguration.setMaxAge(3600L);
-                                return corsConfiguration;
-                            }
-                        }
-                ))
+//                .cors((cor)->cor.configurationSource(
+//                        new CorsConfigurationSource() {
+//                            @Override
+//                            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+//                                CorsConfiguration corsConfiguration = new CorsConfiguration();
+//                                corsConfiguration.setAllowedOrigins(
+//                                        List.of("http://172.16.20.35:5173/","http://localhost:3000/","http://localhost:5173/")
+//                                );
+//                                corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
+//                                corsConfiguration.setAllowCredentials(true);
+//                                corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
+//                                corsConfiguration.setExposedHeaders(List.of("Authorization"));
+//                                corsConfiguration.setMaxAge(3600L);
+//                                return corsConfiguration;
+//                            }
+//                        }
+//                ))
+                .oauth2Login(auth->auth
+                        .defaultSuccessUrl("/me")
+                        .successHandler(auth2SuccessHandler)
+
+                )
+
         ;
 
         return http.build();

@@ -110,11 +110,13 @@ public class JobApplicationServiceImpl implements ApplicationServices {
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
         Page<JobApplication> byJobOpeningId = applicationRepository.findByUserId(userId, pageable);
         List<JobApplicationDto> list = byJobOpeningId.stream().map(e -> JobApplicationDto.builder()
-                .jobOpeningId(e.getId())
+                .jobOpeningId(e.getJobOpening().getId())
                 .id(e.getId())
                 .userId(e.getUser().getId())
                 .resumeLink(e.getResumeLink())
                 .status(e.getStatus())
+                .userId(e.getUser().getId())
+                .socialUrl(e.getSocialUrl())
                 .build()).toList();
 
         return new PageableResponse<>(list,pageNumber,pageSize,byJobOpeningId.getTotalElements());

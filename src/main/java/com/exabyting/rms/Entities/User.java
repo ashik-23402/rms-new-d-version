@@ -4,6 +4,8 @@ import com.exabyting.rms.Entities.Helper.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class User extends BaseEntity{
     @CollectionTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role",nullable = false)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
     private List<Role> roles=new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)

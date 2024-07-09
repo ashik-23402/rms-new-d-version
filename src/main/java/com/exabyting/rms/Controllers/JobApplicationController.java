@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/applications")
 public class JobApplicationController {
@@ -52,7 +53,7 @@ public class JobApplicationController {
         return  new ResponseEntity<>(applicationServices.byUser(pageNumber,pageSize,sortBy,sortDir,userId),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'HR')")
     @PutMapping("/{applicationId}/updateStatus/{status}")
     public ResponseEntity<?> updateStatus(@PathVariable Integer applicationId,@PathVariable String status) throws ResourceNotFound {
 
