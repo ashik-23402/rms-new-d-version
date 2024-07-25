@@ -82,9 +82,7 @@ public class Auth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
         System.out.println(attributes);
         System.out.println(s);
-//        response.sendRedirect("/sucess?token=" +s);
         response.sendRedirect("http://172.16.20.35:5173/sucess?token=" +s);
-//        response.sendRedirect("/me");
 
 
 
