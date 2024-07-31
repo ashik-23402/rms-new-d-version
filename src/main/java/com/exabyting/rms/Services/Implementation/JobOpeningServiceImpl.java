@@ -54,7 +54,7 @@ public class JobOpeningServiceImpl implements JobOpeningServices {
 
         JobOpening jobOpening = jobOpeningRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Job not found with id " + id));
         JobOpening jobOpening1 = ModelMapping.jobOpeningDtoToJobOpening(jobOpeningDto);
-
+        jobOpening1.setId(jobOpening.getId());
         return ModelMapping.jobOpeningToJobOpeningDto(
                 jobOpeningRepository.save(jobOpening1)
         );
