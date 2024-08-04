@@ -93,6 +93,7 @@ public class UserController {
         try {
             UserDto userDto1 = userServices.byId(userId);
             userDto1.setName(userDto.getName());
+            userDto1.setRoles(userDto.getRoles());
             userDto1.setProfile(userDto.getProfile());
             UserDto update = userServices.update(userDto1);
             return new ResponseEntity<>(update,HttpStatus.OK);
