@@ -37,10 +37,14 @@ public class JobOpeningControllers {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String status
     ){
-
-        return new ResponseEntity<>(jobOpeningServices.alljob(pageNumber,pageSize,sortBy,sortDir),HttpStatus.OK);
+        JobOpeningStatus jobOpeningStatus=null;
+        if(status != null){
+            jobOpeningStatus =  JobOpeningStatus.valueOf(status.toUpperCase());
+        }
+        return new ResponseEntity<>(jobOpeningServices.alljob(pageNumber,pageSize,sortBy,sortDir,jobOpeningStatus),HttpStatus.OK);
     }
 
     @GetMapping("status/{status}")

@@ -55,12 +55,11 @@ public class UserServiceImpl implements UserServices {
 
 
     @Override
-    public PageableResponse<UserDto> alluser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+    public PageableResponse<UserDto> alluser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir,Role role) {
 
         Sort sort = sortDir.equalsIgnoreCase("asc")? Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
-        Page<User> all = userRepository.findAll(pageable);
-        System.out.println(all);
+        Page<User> all = userRepository.findAllWithRoleFilter(role,pageable);
         List<UserDto> collect = all.stream().map(ModelMapping::userToUserDto).toList();
         return new PageableResponse<>(collect,pageNumber,pageSize,all.getTotalElements());
     }

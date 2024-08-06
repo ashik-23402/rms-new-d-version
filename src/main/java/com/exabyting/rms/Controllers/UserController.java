@@ -47,10 +47,14 @@ public class UserController {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String role
     ){
-
-        PageableResponse<UserDto> alluser = userServices.alluser(pageNumber, pageSize, sortBy, sortDir);
+        Role userRole = null;
+        if(role != null){
+            userRole = Role.valueOf(role);
+        }
+        PageableResponse<UserDto> alluser = userServices.alluser(pageNumber, pageSize, sortBy, sortDir,userRole);
 
         return new ResponseEntity<>(alluser,HttpStatus.OK);
 

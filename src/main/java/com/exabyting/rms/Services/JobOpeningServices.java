@@ -10,7 +10,7 @@ public interface JobOpeningServices {
     JobOpeningDto crate(JobOpeningDto jobOpeningDto);
     JobOpeningDto byId(Integer id) throws ResourceNotFound;
 
-    PageableResponse<JobOpeningDto> alljob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    PageableResponse<JobOpeningDto> alljob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir,JobOpeningStatus status);
 
     JobOpeningDto update(Integer id,JobOpeningDto jobOpeningDto) throws ResourceNotFound;
 

@@ -37,9 +37,14 @@ public class JobApplicationController {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir){
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String status){
 
-        return new ResponseEntity<>(applicationServices.byJob(pageNumber,pageSize,sortBy,sortDir,jobId),HttpStatus.OK);
+        JobApplicationStatus jobApplicationStatus=null;
+        if(status != null){
+            jobApplicationStatus=JobApplicationStatus.valueOf(status);
+        }
+        return new ResponseEntity<>(applicationServices.byJob(pageNumber,pageSize,sortBy,sortDir,jobId,jobApplicationStatus),HttpStatus.OK);
     }
 
     @GetMapping("/users/{userId}")
@@ -48,9 +53,14 @@ public class JobApplicationController {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir){
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @RequestParam(required = false) String status){
 
-        return  new ResponseEntity<>(applicationServices.byUser(pageNumber,pageSize,sortBy,sortDir,userId),HttpStatus.OK);
+        JobApplicationStatus jobApplicationStatus=null;
+        if(status != null){
+            jobApplicationStatus=JobApplicationStatus.valueOf(status);
+        }
+        return  new ResponseEntity<>(applicationServices.byUser(pageNumber,pageSize,sortBy,sortDir,userId,jobApplicationStatus),HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'HR')")

@@ -40,10 +40,10 @@ public class JobOpeningServiceImpl implements JobOpeningServices {
     }
 
     @Override
-    public PageableResponse<JobOpeningDto> alljob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+    public PageableResponse<JobOpeningDto> alljob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir,JobOpeningStatus status) {
         Sort sort = sortDir.equalsIgnoreCase("asc")? Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
-        Page<JobOpening> alljobs = jobOpeningRepository.findAll(pageable);
+        Page<JobOpening> alljobs = jobOpeningRepository.findAllJobByStatus(status,pageable);
         List<JobOpeningDto> list =
                 alljobs.stream().map(ModelMapping::jobOpeningToJobOpeningDto).toList();
         return new PageableResponse<>(list,pageNumber,pageSize,alljobs.getTotalElements());

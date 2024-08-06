@@ -12,7 +12,7 @@ public interface UserServices {
 
     UserDto create(UserDto userDto);
     UserDto update(UserDto userDto);
-    PageableResponse<UserDto> alluser(Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
+    PageableResponse<UserDto> alluser(Integer pageNumber,Integer pageSize,String sortBy,String sortDir,Role role);
 
     UserDto byId(Integer id) throws ResourceNotFound;
 

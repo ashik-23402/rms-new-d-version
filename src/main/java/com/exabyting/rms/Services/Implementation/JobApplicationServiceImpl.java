@@ -88,11 +88,11 @@ public class JobApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public PageableResponse<JobApplicationDto> byJob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir, Integer jobId) {
+    public PageableResponse<JobApplicationDto> byJob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir, Integer jobId,JobApplicationStatus status) {
 
         Sort sort = sortDir.equalsIgnoreCase("asc")? Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
-        Page<JobApplication> byJobOpeningId = applicationRepository.findByJobOpeningId(jobId, pageable);
+        Page<JobApplication> byJobOpeningId = applicationRepository.findByJobOpeningId(jobId,status, pageable);
         List<JobApplicationDto> list = byJobOpeningId.stream().map(e -> JobApplicationDto.builder()
                 .jobOpeningId(e.getId())
                 .id(e.getId())
@@ -105,10 +105,10 @@ public class JobApplicationServiceImpl implements ApplicationServices {
     }
 
     @Override
-    public PageableResponse<JobApplicationDto> byUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir, Integer userId) {
+    public PageableResponse<JobApplicationDto> byUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir, Integer userId,JobApplicationStatus status) {
         Sort sort = sortDir.equalsIgnoreCase("asc")? Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
-        Page<JobApplication> byJobOpeningId = applicationRepository.findByUserId(userId, pageable);
+        Page<JobApplication> byJobOpeningId = applicationRepository.findByUserId(userId,status, pageable);
         List<JobApplicationDto> list = byJobOpeningId.stream().map(e -> JobApplicationDto.builder()
                 .jobOpeningId(e.getJobOpening().getId())
                 .id(e.getId())

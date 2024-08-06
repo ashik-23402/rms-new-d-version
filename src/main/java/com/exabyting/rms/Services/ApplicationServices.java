@@ -13,8 +13,8 @@ public interface ApplicationServices {
     JobApplicationDto create (JobApplicationDto jobApplicationDto) throws ResourceNotFound, CustomException;
     JobApplicationDto update(Integer id, JobApplicationStatus status) throws ResourceNotFound;
 
-    PageableResponse<JobApplicationDto> byJob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir,Integer jobId);
-    PageableResponse<JobApplicationDto> byUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir,Integer userId);
+    PageableResponse<JobApplicationDto> byJob(Integer pageNumber, Integer pageSize, String sortBy, String sortDir,Integer jobId,JobApplicationStatus status);
+    PageableResponse<JobApplicationDto> byUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir,Integer userId,JobApplicationStatus status);
 
 
 
