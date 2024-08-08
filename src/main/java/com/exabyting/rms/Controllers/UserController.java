@@ -1,5 +1,6 @@
 package com.exabyting.rms.Controllers;
 
+import com.exabyting.rms.DTOs.ProfileUpdateDto;
 import com.exabyting.rms.DTOs.UserDto;
 import com.exabyting.rms.Entities.Helper.Role;
 import com.exabyting.rms.Exception.ResourceNotFound;
@@ -95,12 +96,13 @@ public class UserController {
 
 
     @PutMapping("/update/{userId}")
-    public ResponseEntity<?>update(@PathVariable Integer userId,@RequestBody @Valid UserDto userDto){
+    public ResponseEntity<?>update(@PathVariable Integer userId,@RequestBody @Valid ProfileUpdateDto userDto){
         try {
             UserDto userDto1 = userServices.byId(userId);
             userDto1.setName(userDto.getName());
             userDto1.setRoles(userDto.getRoles());
             userDto1.setProfile(userDto.getProfile());
+            userDto1.setPassword(userDto1.getPassword());
             UserDto update = userServices.update(userDto1);
             return new ResponseEntity<>(update,HttpStatus.OK);
         } catch (Exception e) {
