@@ -1,6 +1,7 @@
 package com.exabyting.rms.Entities;
 
 import com.exabyting.rms.Entities.Helper.JobOpeningStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -28,7 +29,7 @@ public class JobOpening extends BaseEntity {
     private LocalDateTime deadLine;
     @Column(nullable = false)
     private JobOpeningStatus status;
-    @OneToMany(mappedBy = "jobOpening")
+    @OneToMany(mappedBy = "jobOpening",cascade = CascadeType.ALL)
     private List<JobApplication> applications;
 
 }
