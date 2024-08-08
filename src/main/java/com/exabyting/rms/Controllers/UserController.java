@@ -5,7 +5,9 @@ import com.exabyting.rms.Entities.Helper.Role;
 import com.exabyting.rms.Exception.ResourceNotFound;
 import com.exabyting.rms.Services.UserServices;
 import com.exabyting.rms.Utils.PageableResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -26,7 +28,7 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<?> create(@RequestBody UserDto user){
+    public ResponseEntity<?> create(@RequestBody @Valid UserDto user){
 
         try {
             String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -93,7 +95,7 @@ public class UserController {
 
 
     @PutMapping("/update/{userId}")
-    public ResponseEntity<?>update(@PathVariable Integer userId,@RequestBody UserDto userDto){
+    public ResponseEntity<?>update(@PathVariable Integer userId,@RequestBody @Valid UserDto userDto){
         try {
             UserDto userDto1 = userServices.byId(userId);
             userDto1.setName(userDto.getName());

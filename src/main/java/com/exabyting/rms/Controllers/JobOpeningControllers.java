@@ -4,6 +4,7 @@ import com.exabyting.rms.DTOs.JobOpeningDto;
 import com.exabyting.rms.Entities.Helper.JobOpeningStatus;
 import com.exabyting.rms.Exception.ResourceNotFound;
 import com.exabyting.rms.Services.JobOpeningServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class JobOpeningControllers {
 
     @PreAuthorize("hasAnyAuthority('HR', 'ADMIN')")
     @PostMapping("/")
-    public ResponseEntity<?> create(@RequestBody JobOpeningDto jobOpening){
+    public ResponseEntity<?> create(@RequestBody @Valid JobOpeningDto jobOpening){
 
         return new ResponseEntity<>(jobOpeningServices.crate(jobOpening), HttpStatus.CREATED);
     }
