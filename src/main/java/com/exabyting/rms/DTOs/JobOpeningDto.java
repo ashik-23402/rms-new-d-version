@@ -22,10 +22,10 @@ public class JobOpeningDto {
     @NotBlank(message = "requirements is mandatory")
     private String requirements;
 
-    @NotBlank(message = "noOfVacancy is mandatory")
+    @NotNull(message = "noOfVacancy is mandatory")
     private Integer noOfVacancy;
 
-    @NotBlank(message = "deadLine is mandatory")
+    @NotNull(message = "deadLine is mandatory")
     private LocalDateTime deadLine;
 
     private JobOpeningStatus status;
